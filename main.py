@@ -1,9 +1,10 @@
-from modules.db.db import DataBase
+from modules import Application
 
 
 def main():
-    db = DataBase()
+    app = Application()
+    app.start()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

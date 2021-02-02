@@ -1,7 +1,8 @@
 class Note:
 
-    def __init__(self, text):
+    def __init__(self, name, text):
         self.text = text
+        self.name = name
 
     def addText(self, text: str):
         self.text = text
