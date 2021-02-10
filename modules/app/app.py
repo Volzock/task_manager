@@ -7,58 +7,56 @@ from modules.task_group.task_group import TaskGroup
 class Application:
 
     def __init__(self):
-        self.tasks = []
         self.groups = []
-        self.history = []
 
     def start(self):
         try:
             while True:
                 cmd = input("app: ").lower().strip().split()
-                if cmd[0] == "make":
-                    if cmd[1] == "task":
-                        Task.add_task(self.tasks)
-                    elif cmd[1] == "group":
-                        TaskGroup.add_group(self.groups)
-                elif cmd[0] == "list":
-                    if cmd[1] == "tasks":
-                        pass
-                    elif cmd[1] == "groups":
-                        pass
+                if cmd[0] + cmd[1] == "makegroup":
+                    TaskGroup.add_group(self.groups)
                 elif cmd[0] == "edit":
                     pass
                 elif cmd[0] == "view":
-                    pass
-                elif cmd[0] == "remove":
-                    if cmd[1] == "task":
-                        self.remove_task(cmd[2])
-                    elif cmd[1] == "group":
-                        self.remove_group(cmd[2])
+                    if cmd[1] == "groups":
+                        self.print_groups()
+                    elif cmd[1] == "group" and len(cmd) == 3:
+                        print(self.groups[self.group_index_by_name(cmd[2])])
+                    elif cmd[1] == "task" and len(cmd) == 4:
+                        # view task in [3]
+                        pass
+                elif cmd[0] + cmd[1] == "removegroup" and len(cmd) == 3:
+                    self.remove_group(cmd[2])
                 elif cmd[0] == "done":
                     pass
                 elif cmd[0] == "add":
                     pass
                 elif cmd[0] == "help":
                     self.print_help()
+                else:
+                    print("Error command")
+                    print()
         except KeyboardInterrupt:
             print("Bye bye")
 
-    def remove_task(self, name):
-        try:
-            del self.tasks[self.tasks.index(name)]
-        except ValueError:
-            print(f"There is no {name} in tasks")
-
     def remove_group(self, name):
-        try:
-            del self.groups[self.groups.index(name)]
-        except ValueError:
-            print(f"There is no {name} in groups")
+        del self.groups[self.group_index_by_name(name)]
 
     def print_help(self):
         with open("data/help.txt") as help_txt:
             for string in help_txt:
                 print(string)
+        print()
+
+    def group_index_by_name(self, name):
+        try:
+            return [group.name for group in self.groups].index(name)
+        except ValueError:
+            print(f"There is no {name} in groups")
+
+    def print_groups(self):
+        for group in self.groups:
+            print(group.name)
         print()
 
     def __del__(self):

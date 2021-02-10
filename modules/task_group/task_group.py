@@ -14,7 +14,6 @@ class TaskGroup:
             print("Menu of make group")
             while True:
                 name = input("name: ")
-
                 if Checker.unique(groups, name):
                     print("name must be unique")
                     continue
@@ -39,5 +38,5 @@ class TaskGroup:
         del self.tasks[id]
 
     def __repr__(self):
-        tasks_str = ",".join(task for task in self.tasks)
-        return f"{self.name}, tasks: {tasks_str}"
+        tasks_str = "\n   ".join(task.name for task in self.tasks)
+        return f"{self.name}\n tasks: {tasks_str}"
