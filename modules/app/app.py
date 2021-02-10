@@ -44,10 +44,16 @@ class Application:
             print("Bye bye")
 
     def remove_task(self, name):
-        pass
+        try:
+            del self.tasks[self.tasks.index(name)]
+        except ValueError:
+            print(f"There is no {name} in tasks")
 
     def remove_group(self, name):
-        pass
+        try:
+            del self.groups[self.groups.index(name)]
+        except ValueError:
+            print(f"There is no {name} in groups")
 
     def print_help(self):
         with open("data/help.txt") as help_txt:
