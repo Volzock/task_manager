@@ -27,24 +27,17 @@ class Task(Note):
                     print("name must be unique")
                     continue
 
-                try:
-                    return tasks.append(Task(name, text, to_date))
-                except ValueError:
-                    print("format of date is: %d/%m/%y %H:%M:%S, for example 18/09/21 01:55:19")
+                return tasks.append(Task(name, text, to_date))
+
         except KeyboardInterrupt:
             return
-
+        except ValueError:
+            print("format of date is: %d/%m/%y %H:%M:%S, for example 18/09/21 01:55:19")
 
     def done_status(self, status: bool):
         self.isDone = status
 
-    def add_fromdate(self, data: str):
-        self.fromDate = str
-
-    def add_todate(self, data: str):
-        self.toDate = data if self.toDate else self.toDate
-
-    def change_todate(self, data: str):
+    def change_to_date(self, data: str):
         self.toDate = data if data else self.toDate
 
     def remind(self):

@@ -1,4 +1,5 @@
 import pickle
+import os.path
 
 from modules.task.task import Task
 from modules.task_group.task_group import TaskGroup
@@ -8,6 +9,10 @@ class Application:
 
     def __init__(self):
         self.groups = []
+        if os.path.exists("data/objects/groups"):
+            print("data loaded")
+            with open("data/objects/groups", "rb") as file:
+                self.groups = pickle.load(file)
 
     def start(self):
         try:
@@ -17,33 +22,30 @@ class Application:
                     TaskGroup.add_group(self.groups)
                 elif cmd[0] == "edit":
                     if cmd[1] == "group":
-                        pass
+                        if cmd[3] == "rename":
+                            self.groups[self.group_index_by_name(cmd[2])].change_grop_name(cmd[4])
+                        if cmd[3] == "remove":
+                            self.remove_group(cmd[2])
                     elif cmd[1] == "task":
                         pass
                 elif cmd[0] == "view":
                     if cmd[1] == "groups":
                         self.print_groups()
-                    elif cmd[1] == "group" and len(cmd) == 3:
+                    elif cmd[1] == "group":
                         print(self.groups[self.group_index_by_name(cmd[2])])
-                    elif cmd[1] == "task" and len(cmd) == 4:
-                        # view task in [3]
-                        pass
-                elif cmd[0] == "remove" and len(cmd) == 3:
-                    if cmd[1] == "group":
-                        self.remove_group(cmd[2])
                     elif cmd[1] == "task":
                         pass
                 elif cmd[0] == "done":
                     pass
                 elif cmd[0] == "add":
-                    pass
+                    # add task to [name]
+                    self.groups[self.group_index_by_name(cmd[3])].add_task()
                 elif cmd[0] == "help":
                     self.print_help()
-                else:
-                    print("Error command")
-                    print()
         except KeyboardInterrupt:
             print("Bye bye")
+        except IndexError:
+            print("Error command")
 
     def remove_group(self, name):
         del self.groups[self.group_index_by_name(name)]
@@ -66,4 +68,5 @@ class Application:
         print()
 
     def __del__(self):
-        pass
+        with open("data/objects/groups", 'wb') as file:
+         file.write(pickle.dumps(self.groups))

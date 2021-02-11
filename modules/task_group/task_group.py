@@ -22,20 +22,14 @@ class TaskGroup:
         except KeyboardInterrupt:
             return
 
-    def addGroupName(self, name: str):
-        self.name = name
-
-    def changeGroupName(self, name: str):
+    def change_group_name(self, name: str):
         self.name = name if name else self.name
 
-    def removeGroupName(self):
-        self.name = ""
+    def add_task(self):
+        self.tasks.append(Task.add_task(self.tasks))
 
-    def addTask(self, task: Task):
-        self.tasks.append(task)
-
-    def removeTask(self, id: int):
-        del self.tasks[id]
+    def remove_task(self, name: str):
+        del self.tasks[[task.name for task in self.tasks].index(name)]
 
     def __repr__(self):
         tasks_str = "\n   ".join(task.name for task in self.tasks)
