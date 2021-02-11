@@ -1,1 +1,4 @@
 # this is help
+
+remove group [name]
+    - remove group with name = [name]

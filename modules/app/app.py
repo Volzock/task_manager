@@ -13,10 +13,13 @@ class Application:
         try:
             while True:
                 cmd = input("app: ").lower().strip().split()
-                if cmd[0] + cmd[1] == "makegroup":
+                if cmd[0] == "make":
                     TaskGroup.add_group(self.groups)
                 elif cmd[0] == "edit":
-                    pass
+                    if cmd[1] == "group":
+                        pass
+                    elif cmd[1] == "task":
+                        pass
                 elif cmd[0] == "view":
                     if cmd[1] == "groups":
                         self.print_groups()
@@ -25,8 +28,11 @@ class Application:
                     elif cmd[1] == "task" and len(cmd) == 4:
                         # view task in [3]
                         pass
-                elif cmd[0] + cmd[1] == "removegroup" and len(cmd) == 3:
-                    self.remove_group(cmd[2])
+                elif cmd[0] == "remove" and len(cmd) == 3:
+                    if cmd[1] == "group":
+                        self.remove_group(cmd[2])
+                    elif cmd[1] == "task":
+                        pass
                 elif cmd[0] == "done":
                     pass
                 elif cmd[0] == "add":
